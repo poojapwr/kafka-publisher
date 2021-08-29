@@ -1,5 +1,6 @@
 package com.pp.spring.kafka.api;
 
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +20,13 @@ public class KafkaPublisherApplication {
 	public String publishMessage(@PathVariable String name){
 		template.send("kafka-test", "Hi, "+name);
 		return "Data Published";
+	}
+
+	@GetMapping("/publishJson")
+	public String publishMessage(){
+		User user = new User(123,"harshal",new String[]{"sector 7","sanpada"});
+		template.send("kafka-test", user);
+		return "Json Data Published";
 	}
 
 	public static void main(String[] args) {
